@@ -928,6 +928,43 @@
 }
 .fieldSelect option { background: #111111; color: var(--color-surface); }
 
+/* ─── CHIP SELECTOR ─── */
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 9px 16px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.2s var(--easing), color 0.2s var(--easing), background 0.2s var(--easing);
+  text-align: left;
+  line-height: 1;
+}
+.chip:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+}
+.chipActive {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #111111;
+  font-weight: 600;
+}
+.chipActive:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #111111;
+}
+
 .formNavRow {
   display: flex;
   gap: 12px;

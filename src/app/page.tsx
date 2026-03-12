@@ -132,27 +132,53 @@ export default function Home() {
   const [formStep, setFormStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    machineType: "",
-    timeline: "",
-    location: "",
-    budget: "",
-    brand: "",
-    condition: "",
-    payment: "",
-    decisionMaker: "",
-    name: "",
-    phone: "",
-    email: "",
+    machineType: "", timeline: "", location: "",
+    budget: "", brand: "", condition: "",
+    payment: "", decisionMaker: "", name: "", phone: "", email: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const setField = (name: keyof typeof form, value: string) =>
+    setForm(prev => ({ ...prev, [name]: value }));
+
+  const handleText = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setField(e.target.name as keyof typeof form, e.target.value);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const msg = [
+      "Hi! I came from your website and I'm looking for a machine for my project.",
+      "",
+      `*Name:* ${form.name}`,
+      `*Email:* ${form.email || "–"}`,
+      `*Phone/WhatsApp:* ${form.phone}`,
+      "",
+      `*1. Machine needed:* ${form.machineType}`,
+      `*2. When on site:* ${form.timeline}`,
+      `*3. Project location:* ${form.location}`,
+      `*4. Budget:* ${form.budget}`,
+      `*5. Brand preference:* ${form.brand || "No preference"}`,
+      `*6. Condition:* ${form.condition}`,
+      `*7. Payment:* ${form.payment}`,
+      `*8. Decision maker:* ${form.decisionMaker}`,
+    ].join("\n");
+    window.open(`https://wa.me/254700000000?text=${encodeURIComponent(msg)}`, "_blank");
     setSubmitted(true);
   };
+
+  // Reusable chip selector
+  const Chips = ({ field, options }: { field: keyof typeof form; options: string[] }) => (
+    <div className={styles.chipGroup}>
+      {options.map(opt => (
+        <button
+          key={opt} type="button"
+          className={`${styles.chip} ${form[field] === opt ? styles.chipActive : ""}`}
+          onClick={() => setField(field, opt)}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <main className={styles.main}>
@@ -434,23 +460,23 @@ export default function Home() {
         <div className={styles.sectionInner}>
           <div className={styles.formGrid}>
             <div className={styles.formLeft}>
-              <p className={styles.sectionTag}>Book a Call</p>
+              <p className={styles.sectionTag}>Find Your Machine</p>
               <h2 className={styles.formHeading}>
-                Find the Right Machine<br />
-                <em>for Your Project</em>
+                Tell Us What<br />
+                <em>You Need</em>
               </h2>
               <p className={styles.formIntro}>
-                Answer 8 quick questions. We&apos;ll match you to the best available units and
-                call you within 24 hours — no generic sales pitch, just the right options.
+                Answer 8 quick questions and we&apos;ll send you matched, verified options
+                directly on WhatsApp — usually within a few hours.
               </p>
               <div className={styles.formMeta}>
                 <div className={styles.formMetaItem}>
                   <span className={styles.formMetaDot} />
-                  <span>15-minute Equipment Match Call</span>
+                  <span>Matched options sent via WhatsApp</span>
                 </div>
                 <div className={styles.formMetaItem}>
                   <span className={styles.formMetaDot} />
-                  <span>2–3 verified options sent same day</span>
+                  <span>Inspection reports included</span>
                 </div>
                 <div className={styles.formMetaItem}>
                   <span className={styles.formMetaDot} />
@@ -463,140 +489,110 @@ export default function Home() {
               {submitted ? (
                 <div className={styles.formSuccess}>
                   <div className={styles.formSuccessIcon}>
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                      <path d="M6 16l7 7 13-13" stroke="#8B6B5E" strokeWidth="2" strokeLinecap="square"/>
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M5 14l6 6 12-12" stroke="#E8B400" strokeWidth="2" strokeLinecap="square"/>
                     </svg>
                   </div>
-                  <h3 className={styles.formSuccessTitle}>Request Received</h3>
+                  <h3 className={styles.formSuccessTitle}>WhatsApp Opening…</h3>
                   <p className={styles.formSuccessBody}>
-                    We&apos;ll match you to the best options and call you within 24 hours.
-                    Check WhatsApp for a confirmation message.
+                    Your full request has been pre-filled in WhatsApp. Just hit send —
+                    we&apos;ll reply with matched options as soon as possible.
                   </p>
-                  <a
-                    href="https://wa.me/254700000000?text=Hi%2C+I+just+submitted+a+match+request"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.ctaPrimary}
-                  >
-                    Open WhatsApp Chat
-                  </a>
+                  <button className={styles.formSubmit} style={{ marginTop: 8 }} onClick={() => { setSubmitted(false); setFormStep(1); setForm({ machineType:"", timeline:"", location:"", budget:"", brand:"", condition:"", payment:"", decisionMaker:"", name:"", phone:"", email:"" }); }}>
+                    Start Over
+                  </button>
                 </div>
               ) : (
                 <form className={styles.form} onSubmit={handleSubmit} noValidate>
                   <div className={styles.formProgress}>
-                    <div
-                      className={styles.formProgressBar}
-                      style={{ width: `${(formStep / 3) * 100}%` }}
-                    />
+                    <div className={styles.formProgressBar} style={{ width: `${(formStep / 4) * 100}%` }} />
                   </div>
-                  <p className={styles.formStepLabel}>Step {formStep} of 3</p>
+                  <p className={styles.formStepLabel}>Step {formStep} of 4</p>
 
+                  {/* ── STEP 1 — Machine & Urgency ── */}
                   {formStep === 1 && (
                     <div className={styles.formFields}>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="machineType">What machine type do you need? *</label>
-                        <select id="machineType" name="machineType" className={styles.fieldSelect} value={form.machineType} onChange={handleChange} required>
-                          <option value="">Select machine type</option>
-                          <option>Excavator</option>
-                          <option>Wheel Loader</option>
-                          <option>Motor Grader</option>
-                          <option>Bulldozer / Dozer</option>
-                          <option>Tipper Truck</option>
-                          <option>Tractor Head</option>
-                          <option>Other</option>
-                        </select>
+                        <label className={styles.fieldLabel}>What machine do you need? *</label>
+                        <Chips field="machineType" options={["Excavator","Wheel Loader","Motor Grader","Dozer","Tipper Truck","Tractor Head","Other"]} />
                       </div>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="timeline">When do you need it on site? *</label>
-                        <select id="timeline" name="timeline" className={styles.fieldSelect} value={form.timeline} onChange={handleChange} required>
-                          <option value="">Select timeline</option>
-                          <option>0–7 days (urgent)</option>
-                          <option>1–2 weeks</option>
-                          <option>3–4 weeks</option>
-                          <option>Just comparing options</option>
-                        </select>
+                        <label className={styles.fieldLabel}>When do you need it on site? *</label>
+                        <Chips field="timeline" options={["0–7 days (urgent)","1–2 weeks","3–4 weeks","Just comparing"]} />
                       </div>
-                      <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="location">Project location (town + county + country) *</label>
-                        <input id="location" name="location" type="text" className={styles.fieldInput} placeholder="e.g. Thika, Kiambu, Kenya" value={form.location} onChange={handleChange} required />
-                      </div>
-                      <button type="button" className={styles.formNext} onClick={() => setFormStep(2)} disabled={!form.machineType || !form.timeline || !form.location}>
-                        Next — Budget &amp; Preferences
+                      <button type="button" className={styles.formNext} onClick={() => setFormStep(2)} disabled={!form.machineType || !form.timeline}>
+                        Next — Location &amp; Budget
                       </button>
                     </div>
                   )}
 
+                  {/* ── STEP 2 — Location & Budget ── */}
                   {formStep === 2 && (
                     <div className={styles.formFields}>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="budget">Budget range (KES)? *</label>
-                        <select id="budget" name="budget" className={styles.fieldSelect} value={form.budget} onChange={handleChange} required>
-                          <option value="">Select budget range</option>
-                          <option>Below KES 2M</option>
-                          <option>KES 2M – 3M</option>
-                          <option>KES 3M – 5M</option>
-                          <option>KES 5M – 8M</option>
-                          <option>KES 8M+</option>
-                        </select>
+                        <label className={styles.fieldLabel} htmlFor="location">Project location (town + county + country) *</label>
+                        <input id="location" name="location" type="text" className={styles.fieldInput} placeholder="e.g. Thika, Kiambu, Kenya" value={form.location} onChange={handleText} required />
                       </div>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="brand">Preferred brand or model?</label>
-                        <input id="brand" name="brand" type="text" className={styles.fieldInput} placeholder="e.g. Caterpillar, Komatsu, Any" value={form.brand} onChange={handleChange} />
-                      </div>
-                      <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="condition">Condition preference? *</label>
-                        <select id="condition" name="condition" className={styles.fieldSelect} value={form.condition} onChange={handleChange} required>
-                          <option value="">Select condition</option>
-                          <option>Ready to work — minimal service needed</option>
-                          <option>Minor service OK — I have a mechanic</option>
-                          <option>Refurb OK — I want a lower price</option>
-                        </select>
-                      </div>
-                      <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="payment">Payment method? *</label>
-                        <select id="payment" name="payment" className={styles.fieldSelect} value={form.payment} onChange={handleChange} required>
-                          <option value="">Select payment method</option>
-                          <option>Cash / full payment</option>
-                          <option>Part payment (deposit + balance)</option>
-                          <option>Financing / asset finance</option>
-                        </select>
+                        <label className={styles.fieldLabel}>Budget range (KES)? *</label>
+                        <Chips field="budget" options={["Below KES 2M","KES 2M – 3M","KES 3M – 5M","KES 5M – 8M","KES 8M+"]} />
                       </div>
                       <div className={styles.formNavRow}>
                         <button type="button" className={styles.formBack} onClick={() => setFormStep(1)}>← Back</button>
-                        <button type="button" className={styles.formNext} onClick={() => setFormStep(3)} disabled={!form.budget || !form.condition || !form.payment}>
-                          Next — Your Contact Details
+                        <button type="button" className={styles.formNext} onClick={() => setFormStep(3)} disabled={!form.location || !form.budget}>
+                          Next — Preferences
                         </button>
                       </div>
                     </div>
                   )}
 
+                  {/* ── STEP 3 — Brand, Condition & Payment ── */}
                   {formStep === 3 && (
                     <div className={styles.formFields}>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="decisionMaker">Your role in this purchase? *</label>
-                        <select id="decisionMaker" name="decisionMaker" className={styles.fieldSelect} value={form.decisionMaker} onChange={handleChange} required>
-                          <option value="">Select your role</option>
-                          <option>I make the final decision</option>
-                          <option>I recommend — company approves</option>
-                          <option>Procurement / procurement team</option>
-                        </select>
+                        <label className={styles.fieldLabel} htmlFor="brand">Brand / model preference? <span style={{opacity:.5}}>(optional)</span></label>
+                        <input id="brand" name="brand" type="text" className={styles.fieldInput} placeholder="e.g. Caterpillar, Komatsu, Volvo, Any" value={form.brand} onChange={handleText} />
                       </div>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="name">Your name *</label>
-                        <input id="name" name="name" type="text" className={styles.fieldInput} placeholder="Full name" value={form.name} onChange={handleChange} required />
+                        <label className={styles.fieldLabel}>Condition preference? *</label>
+                        <Chips field="condition" options={["Ready to work","Minor service OK","Refurb OK"]} />
                       </div>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="phone">Phone / WhatsApp *</label>
-                        <input id="phone" name="phone" type="tel" className={styles.fieldInput} placeholder="+254 7XX XXX XXX" value={form.phone} onChange={handleChange} required />
-                      </div>
-                      <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="email">Email (optional)</label>
-                        <input id="email" name="email" type="email" className={styles.fieldInput} placeholder="you@company.com" value={form.email} onChange={handleChange} />
+                        <label className={styles.fieldLabel}>How will you pay? *</label>
+                        <Chips field="payment" options={["Cash / full payment","Part payment","Financing / asset finance"]} />
                       </div>
                       <div className={styles.formNavRow}>
                         <button type="button" className={styles.formBack} onClick={() => setFormStep(2)}>← Back</button>
+                        <button type="button" className={styles.formNext} onClick={() => setFormStep(4)} disabled={!form.condition || !form.payment}>
+                          Next — About You
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ── STEP 4 — Decision Maker & Contact ── */}
+                  {formStep === 4 && (
+                    <div className={styles.formFields}>
+                      <div className={styles.field}>
+                        <label className={styles.fieldLabel}>Your role in this purchase? *</label>
+                        <Chips field="decisionMaker" options={["I decide","I recommend","Company approval needed"]} />
+                      </div>
+                      <div className={styles.field}>
+                        <label className={styles.fieldLabel} htmlFor="name">Your name *</label>
+                        <input id="name" name="name" type="text" className={styles.fieldInput} placeholder="Full name" value={form.name} onChange={handleText} required />
+                      </div>
+                      <div className={styles.field}>
+                        <label className={styles.fieldLabel} htmlFor="phone">Phone / WhatsApp *</label>
+                        <input id="phone" name="phone" type="tel" className={styles.fieldInput} placeholder="+254 7XX XXX XXX" value={form.phone} onChange={handleText} required />
+                      </div>
+                      <div className={styles.field}>
+                        <label className={styles.fieldLabel} htmlFor="email">Email <span style={{opacity:.5}}>(optional)</span></label>
+                        <input id="email" name="email" type="email" className={styles.fieldInput} placeholder="you@company.com" value={form.email} onChange={handleText} />
+                      </div>
+                      <div className={styles.formNavRow}>
+                        <button type="button" className={styles.formBack} onClick={() => setFormStep(3)}>← Back</button>
                         <button type="submit" className={styles.formSubmit} disabled={!form.decisionMaker || !form.name || !form.phone}>
-                          Book My Equipment Match Call
+                          Send via WhatsApp →
                         </button>
                       </div>
                     </div>

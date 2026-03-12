@@ -134,7 +134,7 @@ export default function Home() {
   const [form, setForm] = useState({
     machineType: "", timeline: "", location: "",
     budget: "", brand: "", condition: "",
-    payment: "", decisionMaker: "", name: "", phone: "", email: "",
+    payment: "", decisionMaker: "", firstName: "", lastName: "", phone: "", email: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -154,7 +154,7 @@ export default function Home() {
         condition: form.condition,
         payment_method: form.payment,
         decision_maker: form.decisionMaker,
-        full_name: form.name,
+        full_name: `${form.firstName} ${form.lastName}`.trim(),
         phone: form.phone,
         email: form.email,
         source_page: "Book a Call Form",
@@ -581,8 +581,12 @@ export default function Home() {
                         </select>
                       </div>
                       <div className={styles.field}>
-                        <label className={styles.fieldLabel} htmlFor="name">Your name *</label>
-                        <input id="name" name="name" type="text" className={styles.fieldInput} placeholder="Full name" value={form.name} onChange={handleChange} required />
+                        <label className={styles.fieldLabel} htmlFor="firstName">First name *</label>
+                        <input id="firstName" name="firstName" type="text" className={styles.fieldInput} placeholder="First name" value={form.firstName} onChange={handleChange} required />
+                      </div>
+                      <div className={styles.field}>
+                        <label className={styles.fieldLabel} htmlFor="lastName">Last name *</label>
+                        <input id="lastName" name="lastName" type="text" className={styles.fieldInput} placeholder="Last name" value={form.lastName} onChange={handleChange} required />
                       </div>
                       <div className={styles.field}>
                         <label className={styles.fieldLabel} htmlFor="email">Email *</label>
@@ -594,7 +598,7 @@ export default function Home() {
                       </div>
                       <div className={styles.formNavRow}>
                         <button type="button" className={styles.formBack} onClick={() => setFormStep(2)}>← Back</button>
-                        <button type="submit" className={styles.formSubmit} disabled={!form.decisionMaker || !form.name || !form.phone || !form.email}>
+                        <button type="submit" className={styles.formSubmit} disabled={!form.decisionMaker || !form.firstName || !form.lastName || !form.phone || !form.email}>
                           Book My Equipment Match Call
                         </button>
                       </div>

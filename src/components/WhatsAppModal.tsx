@@ -7,7 +7,7 @@ type Props = { onClose: () => void };
 const EMPTY = {
   machineType: "", timeline: "", location: "",
   budget: "", brand: "", condition: "",
-  payment: "", decisionMaker: "", name: "", phone: "", email: "",
+  payment: "", decisionMaker: "", firstName: "", lastName: "", phone: "", email: "",
 };
 
 function Chips({ options, value, onSelect }: { options: string[]; value: string; onSelect: (v: string) => void }) {
@@ -48,7 +48,7 @@ export default function WhatsAppModal({ onClose }: Props) {
         condition: form.condition,
         payment_method: form.payment,
         decision_maker: form.decisionMaker,
-        full_name: form.name,
+        full_name: `${form.firstName} ${form.lastName}`.trim(),
         phone: form.phone,
         email: form.email,
         source_page: "WhatsApp Form",
@@ -57,7 +57,7 @@ export default function WhatsAppModal({ onClose }: Props) {
     const msg = [
       "Hi! I found your website and I'm looking for a machine.",
       "",
-      `*Name:* ${form.name}`,
+      `*Name:* ${form.firstName} ${form.lastName}`,
       `*Email:* ${form.email || "–"}`,
       `*Phone/WhatsApp:* ${form.phone}`,
       "",
@@ -184,9 +184,14 @@ export default function WhatsAppModal({ onClose }: Props) {
                       options={["I decide","I recommend","Company approval needed"]} />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.label} htmlFor="wa-name">Your name *</label>
-                    <input id="wa-name" name="name" type="text" className={styles.input}
-                      placeholder="Full name" value={form.name} onChange={txt} required />
+                    <label className={styles.label} htmlFor="wa-firstname">First name *</label>
+                    <input id="wa-firstname" name="firstName" type="text" className={styles.input}
+                      placeholder="First name" value={form.firstName} onChange={txt} required />
+                  </div>
+                  <div className={styles.field}>
+                    <label className={styles.label} htmlFor="wa-lastname">Last name *</label>
+                    <input id="wa-lastname" name="lastName" type="text" className={styles.input}
+                      placeholder="Last name" value={form.lastName} onChange={txt} required />
                   </div>
                   <div className={styles.field}>
                     <label className={styles.label} htmlFor="wa-phone">Phone / WhatsApp *</label>
@@ -201,7 +206,7 @@ export default function WhatsAppModal({ onClose }: Props) {
                   <div className={styles.navRow}>
                     <button type="button" className={styles.btnBack} onClick={() => setStep(3)}>← Back</button>
                     <button type="submit" className={styles.btnSubmit}
-                      disabled={!form.decisionMaker || !form.name || !form.phone}>
+                      disabled={!form.decisionMaker || !form.firstName || !form.lastName || !form.phone}>
                       Send via WhatsApp →
                     </button>
                   </div>

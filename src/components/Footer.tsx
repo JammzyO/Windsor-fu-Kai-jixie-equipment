@@ -56,7 +56,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className={styles.colLink}
               >
-                +254 700 000 000
+                +254 717 295 952
               </a>
               <span className={styles.colText}>Nairobi, Kenya</span>
               <span className={styles.colText}>Mon–Sat, 8am–6pm</span>

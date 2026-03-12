@@ -36,6 +36,24 @@ export default function WhatsAppModal({ onClose }: Props) {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    fetch("https://hook.eu2.make.com/knpw4zm1cu1g2jip8ltmplvrd52bkc7q", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        machine_type: form.machineType,
+        timeline: form.timeline,
+        location: form.location,
+        budget: form.budget,
+        brand_preference: form.brand || "No preference",
+        condition: form.condition,
+        payment_method: form.payment,
+        decision_maker: form.decisionMaker,
+        full_name: form.name,
+        phone: form.phone,
+        email: form.email,
+        source_page: "WhatsApp Form",
+      }),
+    }).catch(() => {});
     const msg = [
       "Hi! I found your website and I'm looking for a machine.",
       "",

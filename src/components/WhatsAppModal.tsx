@@ -52,7 +52,7 @@ export default function WhatsAppModal({ onClose }: Props) {
       `*7. Payment:* ${form.payment}`,
       `*8. Decision maker:* ${form.decisionMaker}`,
     ].join("\n");
-    window.open(`https://wa.me/254700000000?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/254717295952?text=${encodeURIComponent(msg)}`, "_blank");
     setDone(true);
   };
 

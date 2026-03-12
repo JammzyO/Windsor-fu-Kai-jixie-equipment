@@ -51,7 +51,7 @@ export default function Footer() {
             <div className={styles.col}>
               <h4 className={styles.colHeading}>Contact</h4>
               <a
-                href="https://wa.me/254700000000"
+                href="https://wa.me/254717295952"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.colLink}

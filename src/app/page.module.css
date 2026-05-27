@@ -154,6 +154,75 @@
   align-items: center;
 }
 
+.heroLocation {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── CTA: WhatsApp (green) ─── */
+.ctaWhatsApp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  background: #25d366;
+  color: #111111;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid #25d366;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s var(--easing), color 0.3s var(--easing), border-color 0.3s var(--easing);
+}
+.ctaWhatsApp:hover { background: transparent; color: #25d366; border-color: #25d366; }
+.ctaWhatsApp:focus-visible { outline: 2px solid #25d366; outline-offset: 3px; }
+.ctaWhatsApp:active { opacity: 0.85; transform: translateY(1px); }
+
+/* ─── CTA: Call (outlined, hero light) ─── */
+.ctaCall {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  transition: color 0.3s var(--easing), border-color 0.3s var(--easing);
+}
+.ctaCall:hover { color: var(--color-surface); border-color: rgba(255, 255, 255, 0.5); }
+.ctaCall:focus-visible { outline: 1px solid var(--color-surface); outline-offset: 3px; }
+
+/* ─── CTA: Call (dark bg) ─── */
+.ctaCallDark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  transition: color 0.3s var(--easing), border-color 0.3s var(--easing);
+}
+.ctaCallDark:hover { color: var(--color-surface); border-color: rgba(255, 255, 255, 0.5); }
+.ctaCallDark:focus-visible { outline: 1px solid var(--color-surface); outline-offset: 3px; }
+
 .heroScroll {
   position: absolute;
   bottom: 40px;
@@ -240,7 +309,7 @@
 .ctaOutline:focus-visible { outline: 1px solid var(--color-accent); outline-offset: 3px; }
 
 /* ═══════════════════════════════════════════════════════════
-   TRUST / STATS BAR — LIGHT SECTION
+   TRUST STRIP
 ═══════════════════════════════════════════════════════════ */
 .trustBar {
   background: var(--color-light);
@@ -249,41 +318,45 @@
   clip-path: polygon(0 56px, 100% 0, 100% calc(100% - 56px), 0 100%);
   margin-top: -56px;
   margin-bottom: -56px;
+  padding: 80px 0;
 }
 
 .trustInner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 0 80px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 0;
 }
 
 .trustItem {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
-  padding: 80px 24px;
-  border-right: 1px solid rgba(17, 17, 17, 0.08);
+  gap: 12px;
+  padding: 20px 24px;
+  border-right: 1px solid rgba(17, 17, 17, 0.1);
 }
+.trustItem:first-child { padding-left: 0; }
 .trustItem:last-child { border-right: none; }
 
-.trustStat {
-  font-family: var(--font-display);
-  font-size: clamp(52px, 6vw, 80px);
-  font-weight: 700;
+.trustLabel {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: #111111;
-  letter-spacing: -0.04em;
-  line-height: 1;
 }
 
-.trustLabel {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.45);
+.trustTagline {
+  max-width: var(--max-width);
+  margin: 24px auto 0;
+  padding: 0 80px;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(17, 17, 17, 0.5);
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+  padding-top: 20px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -342,7 +415,7 @@
 ═══════════════════════════════════════════════════════════ */
 .stockGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2px;
   background: rgba(255, 255, 255, 0.06);
   margin-bottom: 40px;
@@ -413,12 +486,16 @@
 
 .cardSpecs {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardSpecItem {
   font-size: 11px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
 }
 
 .cardDot {
@@ -447,18 +524,23 @@
 }
 
 .cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  padding: 8px 16px;
-  border: 1px solid rgba(232, 180, 0, 0.35);
-  transition: background 0.25s var(--easing), color 0.25s var(--easing);
+  color: #111111;
+  padding: 9px 16px;
+  background: #25d366;
+  border: 1px solid #25d366;
+  text-decoration: none;
+  transition: background 0.25s var(--easing), color 0.25s var(--easing), border-color 0.25s var(--easing);
 }
-.cardCta:hover { background: var(--color-accent); color: #111111; }
-.cardCta:focus-visible { outline: 1px solid var(--color-accent); outline-offset: 2px; }
-.cardCta:active { opacity: 0.8; }
+.cardCta:hover { background: transparent; color: #25d366; border-color: #25d366; }
+.cardCta:focus-visible { outline: 1px solid #25d366; outline-offset: 2px; }
+.cardCta:active { opacity: 0.85; }
 
 .stockFooter {
   display: flex;
@@ -1095,27 +1177,181 @@
   flex-wrap: wrap;
 }
 
-.ctaWhatsAppFull {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 28px;
-  border: 1px solid rgba(37, 211, 102, 0.3);
-  color: rgba(37, 211, 102, 0.8);
-  font-size: 12px;
+/* ═══════════════════════════════════════════════════════════
+   WHY WINDSOR
+═══════════════════════════════════════════════════════════ */
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.whyCard {
+  background: #0A0A0A;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 2px solid transparent;
+  transition: border-color 0.3s var(--easing), background 0.3s var(--easing);
+}
+.whyCard:hover {
+  border-top-color: var(--color-accent);
+  background: rgba(232, 180, 0, 0.02);
+}
+
+.whyIcon {
+  flex-shrink: 0;
+}
+
+.whyHeadline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-surface);
+  line-height: 1.3;
+}
+
+.whyProof {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════════════════════ */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonialCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border);
+  padding: 48px 56px;
+  position: relative;
+}
+
+.testimonialQuoteMark {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.25;
+  position: absolute;
+  top: 16px;
+  left: 40px;
+  user-select: none;
+}
+
+.testimonialText {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.75;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+.testimonialAttrib {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 20px;
+  border-left: 2px solid var(--color-accent);
+}
+
+.testimonialName {
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  color: var(--color-surface);
+  letter-spacing: 0.06em;
+}
+
+.testimonialMeta {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ — CHEVRON ICON
+═══════════════════════════════════════════════════════════ */
+.faqIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-accent);
+  transition: transform 0.3s var(--easing);
+}
+
+.faqIconOpen {
+  transform: rotate(180deg);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STICKY MOBILE BAR
+═══════════════════════════════════════════════════════════ */
+.stickyBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #0A0A0A;
+  border-top: 1px solid var(--color-border);
+  padding: 12px 20px;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.stickyWa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  padding: 14px 20px;
+  background: #25d366;
+  color: #111111;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: background 0.3s var(--easing), color 0.3s var(--easing), border-color 0.3s var(--easing);
+  border: none;
+  transition: opacity 0.2s;
 }
-.ctaWhatsAppFull:hover {
-  background: rgba(37, 211, 102, 0.08);
-  color: #25d366;
-  border-color: rgba(37, 211, 102, 0.6);
+.stickyWa:active { opacity: 0.85; }
+
+.stickyCall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: #111111;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--color-border-strong);
+  transition: color 0.2s, border-color 0.2s;
 }
-.ctaWhatsAppFull:focus-visible { outline: 1px solid #25d366; outline-offset: 3px; }
-.ctaWhatsAppFull:active { opacity: 0.85; }
+.stickyCall:active { opacity: 0.85; }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
@@ -1123,38 +1359,52 @@
 @media (max-width: 1100px) {
   .sectionInner { padding: 0 48px; }
   .heroContent { padding: 140px 48px 80px; }
-  .stockGrid { grid-template-columns: repeat(2, 1fr); }
   .stepsGrid { grid-template-columns: repeat(2, 1fr); }
   .step { border-right: none; border-bottom: 1px solid var(--color-border); }
-  .step:nth-child(2), .step:nth-child(4) { border-right: none; border-bottom: 1px solid var(--color-border); }
   .step:last-child { border-bottom: none; }
+  .whyGrid { grid-template-columns: 1fr; }
+  .whyCard { padding: 36px 32px; }
+  .trustInner { padding: 0 48px; }
+  .trustTagline { padding-left: 48px; padding-right: 48px; }
 }
 
 @media (max-width: 900px) {
   .trustInner { grid-template-columns: repeat(2, 1fr); }
   .trustItem:nth-child(2) { border-right: none; }
-  .trustItem:nth-child(3) { border-top: 1px solid rgba(17, 17, 17, 0.08); }
-  .trustItem:nth-child(4) { border-top: 1px solid rgba(17, 17, 17, 0.08); border-right: none; }
-  .verifyGrid { grid-template-columns: 1fr; gap: 48px; }
-  .coverageGrid { grid-template-columns: 1fr; gap: 48px; }
+  .trustItem:nth-child(3) { border-top: 1px solid rgba(17, 17, 17, 0.1); }
+  .trustItem:nth-child(4) { border-top: 1px solid rgba(17, 17, 17, 0.1); border-right: none; }
   .formGrid { grid-template-columns: 1fr; gap: 48px; }
   .formLeft { position: static; }
   .finalCtaInner { flex-direction: column; align-items: flex-start; }
   .heroScroll { display: none; }
+  .testimonialsGrid { max-width: 100%; }
+  .testimonialCard { padding: 40px 36px; }
+}
+
+@media (max-width: 768px) {
+  .stickyBar { display: flex; }
+  .section, .sectionDark, .formSection, .finalCta { padding: 80px 0; }
+  .stockGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
   .sectionInner { padding: 0 24px; }
-  .heroContent { padding: 120px 24px 64px; }
-  .section, .sectionDark, .coverageSection, .formSection, .finalCta { padding: 80px 0; }
-  .stockGrid { grid-template-columns: 1fr; }
+  .heroContent { padding: 120px 24px 80px; }
   .stepsGrid { grid-template-columns: 1fr; }
   .step { border-right: none; }
-  .trustInner { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
+  .trustBar { padding: 64px 0; }
+  .trustInner { grid-template-columns: 1fr 1fr; padding: 0 24px; }
+  .trustItem { padding: 12px 16px; gap: 10px; }
+  .trustItem:first-child { padding-left: 16px; }
+  .trustTagline { padding-left: 24px; padding-right: 24px; font-size: 12px; }
   .form { padding: 24px 20px; }
   .formSuccess { padding: 32px 24px; }
-  .finalCtaButtons { flex-direction: column; }
-  .verifyRight { padding: 24px 20px; }
-  .trustStat { font-size: 44px; }
-  .trustItem { padding: 56px 16px; }
+  .finalCtaButtons { flex-direction: column; width: 100%; }
+  .ctaWhatsApp, .ctaCallDark { width: 100%; justify-content: center; }
+  .testimonialCard { padding: 36px 24px; }
+  .testimonialQuoteMark { font-size: 64px; left: 20px; }
+  .testimonialText { font-size: 15px; }
+  .heroCtas { flex-direction: column; align-items: flex-start; }
+  .ctaWhatsApp, .ctaCall { width: 100%; justify-content: center; }
+  .whyCard { padding: 32px 24px; }
 }

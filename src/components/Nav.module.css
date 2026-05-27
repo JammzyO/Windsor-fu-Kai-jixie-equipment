@@ -98,22 +98,25 @@
 .bookCta {
   display: inline-flex;
   align-items: center;
-  padding: 10px 24px;
-  background: var(--color-accent);
+  gap: 8px;
+  padding: 10px 20px;
+  background: #25d366;
   color: #111111;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  border: 1px solid var(--color-accent);
-  transition: background 0.3s var(--easing), color 0.3s var(--easing);
+  border: 1px solid #25d366;
+  text-decoration: none;
+  transition: background 0.3s var(--easing), color 0.3s var(--easing), border-color 0.3s var(--easing);
 }
 .bookCta:hover {
   background: transparent;
-  color: var(--color-accent);
+  color: #25d366;
+  border-color: #25d366;
 }
 .bookCta:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid #25d366;
   outline-offset: 3px;
 }
 .bookCta:active {

@@ -56,13 +56,18 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className={styles.colLink}
               >
-                +254 717 295 952
+                WhatsApp: 0717 295 952
               </a>
-              <span className={styles.colText}>Nairobi, Kenya</span>
-              <span className={styles.colText}>Mon–Sat, 8am–6pm</span>
+              <a href="tel:+254717295952" className={styles.colLink}>
+                Call: 0717 295 952
+              </a>
               <a href="mailto:info@windsorfukai.co.ke" className={styles.colLink}>
                 info@windsorfukai.co.ke
               </a>
+              <span className={styles.colText}>Garden Estate (near Windsor Roundabout,</span>
+              <span className={styles.colText}>Northern Bypass), Nairobi, Kenya</span>
+              <span className={styles.colText}>Mon–Sat, 8:00 AM – 6:00 PM</span>
+              <span className={styles.colText}>Sunday: by appointment</span>
             </div>
           </div>
         </div>
@@ -71,10 +76,10 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <p className={styles.copy}>
-            &copy; {year} Windsor Fu Kai Jixie Equipment. All rights reserved.
+            &copy; {year} Windsor Fu Kai Jixie Equipment Ltd. All rights reserved.
           </p>
           <p className={styles.copy}>
-            Kenya &nbsp;·&nbsp; Uganda &nbsp;·&nbsp; Tanzania &nbsp;·&nbsp; Ethiopia &nbsp;·&nbsp; Rwanda
+            Powered by <a href="https://fanisi.co.ke" target="_blank" rel="noopener noreferrer" className={styles.fanisiLink}>Fanisi</a>
           </p>
         </div>
       </div>

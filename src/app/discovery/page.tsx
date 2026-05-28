@@ -632,11 +632,15 @@ export default function DiscoveryPage() {
   if (done) {
     return (
       <div className={styles.page}>
+        <div className={styles.fanisiHeader}>
+          <img src="/fanisi-logo.png" alt="Fanisi" className={styles.fanisiLogo} />
+          <div className={styles.colorStripe} />
+        </div>
         <div className={styles.success}>
           <div className={styles.successIcon}>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <rect x="1" y="1" width="42" height="42" stroke="#E8B400" strokeWidth="1.5" />
-              <path d="M11 22l8 8 14-14" stroke="#E8B400" strokeWidth="2" strokeLinecap="square" />
+              <rect x="1" y="1" width="42" height="42" stroke="#F7941D" strokeWidth="1.5" />
+              <path d="M11 22l8 8 14-14" stroke="#F7941D" strokeWidth="2" strokeLinecap="square" />
             </svg>
           </div>
           <h1 className={styles.successTitle}>Questionnaire Received</h1>
@@ -656,7 +660,13 @@ export default function DiscoveryPage() {
 
   return (
     <div className={styles.page}>
-      {/* Amber progress bar */}
+      {/* Fanisi branding header */}
+      <div className={styles.fanisiHeader}>
+        <img src="/fanisi-logo.png" alt="Fanisi" className={styles.fanisiLogo} />
+        <div className={styles.colorStripe} />
+      </div>
+
+      {/* Progress bar */}
       <div className={styles.progressTrack}>
         <div className={styles.progressFill} style={{ width: `${progress}%` }} />
       </div>
@@ -839,7 +849,7 @@ function QuestionBlock({
                 <span className={styles.checkBox} aria-hidden="true">
                   {checked && (
                     <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                      <path d="M1 4.5L3.5 7 8 1.5" stroke="#111111" strokeWidth="1.5" strokeLinecap="square" />
+                      <path d="M1 4.5L3.5 7 8 1.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="square" />
                     </svg>
                   )}
                 </span>

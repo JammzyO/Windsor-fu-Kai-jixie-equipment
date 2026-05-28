@@ -79,7 +79,7 @@ export default function Footer() {
             &copy; {year} Windsor Fu Kai Jixie Equipment Ltd. All rights reserved.
           </p>
           <p className={styles.copy}>
-            Powered by <a href="https://fanisi.co.ke" target="_blank" rel="noopener noreferrer" className={styles.fanisiLink}>Fanisi</a>
+            Powered by <a href="https://www.fanisionline.com/1" target="_blank" rel="noopener noreferrer" className={styles.fanisiLink}>Fanisi</a>
           </p>
         </div>
       </div>

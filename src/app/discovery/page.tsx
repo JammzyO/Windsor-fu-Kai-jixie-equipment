@@ -523,7 +523,6 @@ const TOTAL = SECTIONS.length;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function buildPayload(answers: Record<string, string | string[]>) {
-  const labeled: Record<string, string> = {};
   const summaryLines: string[] = [];
 
   for (const section of SECTIONS) {
@@ -538,7 +537,6 @@ function buildPayload(answers: Record<string, string | string[]>) {
     for (const q of answeredQs) {
       const v = answers[q.id];
       const text = Array.isArray(v) ? v.join(" | ") : v;
-      labeled[q.label] = text;
       summaryLines.push(q.label);
       summaryLines.push(text);
       summaryLines.push("");
@@ -549,7 +547,6 @@ function buildPayload(answers: Record<string, string | string[]>) {
     form: "Windsor Fanisi Discovery Questionnaire",
     submitted_at: new Date().toISOString(),
     summary: summaryLines.join("\n"),
-    ...labeled,
   };
 }
 

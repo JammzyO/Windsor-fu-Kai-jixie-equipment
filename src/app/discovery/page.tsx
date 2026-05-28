@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
-// ─── Update this with your Make.com webhook URL ────────────────────────────────
-const WEBHOOK_URL = "YOUR_MAKE_WEBHOOK_URL_HERE";
+const WEBHOOK_URL = "https://hook.eu2.make.com/k977ngweu043lscj32x6rpnkbrl9pt8s";
 const STORAGE_KEY = "wfk_discovery_v1";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -523,12 +522,35 @@ const SECTIONS: Section[] = [
 const TOTAL = SECTIONS.length;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-function flattenAnswers(answers: Record<string, string | string[]>) {
-  const out: Record<string, string> = {};
-  for (const [k, v] of Object.entries(answers)) {
-    out[k] = Array.isArray(v) ? v.join(" | ") : v;
+function buildPayload(answers: Record<string, string | string[]>) {
+  const labeled: Record<string, string> = {};
+  const summaryLines: string[] = [];
+
+  for (const section of SECTIONS) {
+    const answeredQs = section.questions.filter(q => {
+      const v = answers[q.id];
+      return v && !(Array.isArray(v) && !v.length) && !(typeof v === "string" && !v.trim());
+    });
+    if (!answeredQs.length) continue;
+
+    summaryLines.push(`\n── ${section.letter}: ${section.title} ──\n`);
+
+    for (const q of answeredQs) {
+      const v = answers[q.id];
+      const text = Array.isArray(v) ? v.join(" | ") : v;
+      labeled[q.label] = text;
+      summaryLines.push(q.label);
+      summaryLines.push(text);
+      summaryLines.push("");
+    }
   }
-  return out;
+
+  return {
+    form: "Windsor Fanisi Discovery Questionnaire",
+    submitted_at: new Date().toISOString(),
+    summary: summaryLines.join("\n"),
+    ...labeled,
+  };
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -617,11 +639,7 @@ export default function DiscoveryPage() {
       await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          form: "Windsor Fanisi Discovery Questionnaire",
-          submitted_at: new Date().toISOString(),
-          ...flattenAnswers(answers),
-        }),
+        body: JSON.stringify(buildPayload(answers)),
       });
     } catch {}
     try { localStorage.removeItem(STORAGE_KEY); } catch {}

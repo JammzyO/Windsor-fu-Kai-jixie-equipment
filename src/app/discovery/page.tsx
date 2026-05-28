@@ -553,11 +553,13 @@ function buildPayload(answers: Record<string, string | string[]>) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function DiscoveryPage() {
   const [step, setStep] = useState(0);
+  const [maxStep, setMaxStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [dir, setDir] = useState<"fwd" | "back">("fwd");
   const [animKey, setAnimKey] = useState(0);
 
@@ -618,7 +620,11 @@ export default function DiscoveryPage() {
     if (!validate()) return;
     setDir("fwd");
     setAnimKey(k => k + 1);
-    setStep(s => s + 1);
+    setStep(s => {
+      const next = s + 1;
+      setMaxStep(m => Math.max(m, next));
+      return next;
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -626,6 +632,24 @@ export default function DiscoveryPage() {
     setDir("back");
     setAnimKey(k => k + 1);
     setStep(s => s - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const jumpTo = (target: number) => {
+    setDir(target < step ? "back" : "fwd");
+    setAnimKey(k => k + 1);
+    setStep(target);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const resetForm = () => {
+    setStep(0);
+    setMaxStep(0);
+    setAnswers({});
+    setErrors({});
+    setDone(false);
+    setShowReview(false);
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -663,7 +687,50 @@ export default function DiscoveryPage() {
             Thank you. Once Fanisi has this back, we will book a 60-minute follow-up call to clarify anything that needs more depth — and then begin building.
           </p>
           <p className={styles.successTagline}>Tutaweza.</p>
-          <a href="/" className={styles.successLink}>← Back to Windsor</a>
+
+          <div className={styles.successActions}>
+            <button
+              onClick={() => setShowReview(r => !r)}
+              className={styles.btnReview}
+            >
+              {showReview ? "Hide answers" : "Review your answers"}
+            </button>
+            <button onClick={resetForm} className={styles.btnReset}>
+              Fill in another form
+            </button>
+            <a href="/" className={styles.successLink}>← Back to Windsor</a>
+          </div>
+
+          {showReview && (
+            <div className={styles.reviewPanel}>
+              {SECTIONS.map(section => {
+                const answered = section.questions.filter(q => {
+                  const v = answers[q.id];
+                  return v && !(Array.isArray(v) && !v.length) && !(typeof v === "string" && !v.trim());
+                });
+                if (!answered.length) return null;
+                return (
+                  <div key={section.letter} className={styles.reviewSection}>
+                    <div className={styles.reviewSectionHead}>
+                      <span className={styles.reviewLetter}>{section.letter}</span>
+                      <span className={styles.reviewSectionTitle}>{section.title}</span>
+                    </div>
+                    {answered.map(q => {
+                      const v = answers[q.id];
+                      return (
+                        <div key={q.id} className={styles.reviewQA}>
+                          <p className={styles.reviewQ}>{q.label}</p>
+                          <p className={styles.reviewA}>
+                            {Array.isArray(v) ? v.join(", ") : v}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -684,6 +751,27 @@ export default function DiscoveryPage() {
       {/* Progress bar */}
       <div className={styles.progressTrack}>
         <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+      </div>
+
+      {/* Section stepper */}
+      <div className={styles.stepper} role="navigation" aria-label="Form sections">
+        {SECTIONS.map((s, i) => (
+          <button
+            key={s.letter}
+            onClick={() => i <= maxStep && jumpTo(i)}
+            disabled={i > maxStep}
+            title={s.title}
+            aria-current={i === step ? "step" : undefined}
+            className={[
+              styles.stepDot,
+              i === step ? styles.stepActive : "",
+              i < step ? styles.stepDone : "",
+              i > maxStep ? styles.stepLocked : "",
+            ].filter(Boolean).join(" ")}
+          >
+            {s.letter}
+          </button>
+        ))}
       </div>
 
       {/* Meta row */}

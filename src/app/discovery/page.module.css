@@ -57,6 +57,64 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   SECTION STEPPER — jump bar below progress track
+═══════════════════════════════════════════════════════════ */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 32px 0;
+}
+
+.stepDot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(65, 64, 66, 0.15);
+  background: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(65, 64, 66, 0.35);
+  cursor: default;
+  transition:
+    background 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 160ms var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepDone {
+  border-color: var(--fanisi-orange);
+  color: var(--fanisi-orange);
+  cursor: pointer;
+}
+
+.stepActive {
+  background: var(--fanisi-orange);
+  border-color: var(--fanisi-orange);
+  color: #FFFFFF;
+  cursor: default;
+}
+
+.stepLocked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stepDone:hover {
+    background: rgba(247, 148, 29, 0.1);
+    transform: scale(1.1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    PROGRESS BAR — fixed below nav
 ═══════════════════════════════════════════════════════════ */
 .progressTrack {
@@ -670,6 +728,70 @@
   margin-bottom: 40px;
 }
 
+.successActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btnReview {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--fanisi-orange);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--fanisi-orange);
+  cursor: pointer;
+  transition:
+    background 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btnReview:hover {
+    background: var(--fanisi-orange);
+    color: #FFFFFF;
+  }
+}
+
+.btnReview:active { transform: scale(0.97); }
+
+.btnReset {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 24px;
+  background: transparent;
+  color: rgba(65, 64, 66, 0.6);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(65, 64, 66, 0.2);
+  cursor: pointer;
+  transition:
+    border-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btnReset:hover {
+    border-color: rgba(65, 64, 66, 0.5);
+    color: rgba(65, 64, 66, 0.9);
+  }
+}
+
+.btnReset:active { transform: scale(0.97); }
+
 .successLink {
   font-size: 12px;
   font-weight: 500;
@@ -684,6 +806,78 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   REVIEW PANEL — read-only answers shown after submit
+═══════════════════════════════════════════════════════════ */
+@keyframes reviewEnter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reviewPanel {
+  margin-top: 48px;
+  border-top: 1px solid var(--fanisi-border);
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  animation: reviewEnter 400ms var(--ease-out) both;
+}
+
+.reviewSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.reviewSectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--fanisi-border);
+}
+
+.reviewLetter {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--fanisi-teal);
+  opacity: 0.5;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.reviewSectionTitle {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fanisi-charcoal);
+  letter-spacing: -0.01em;
+}
+
+.reviewQA {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reviewQ {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(65, 64, 66, 0.55);
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.reviewA {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fanisi-charcoal);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* ═══════════════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
@@ -692,6 +886,29 @@
   .fanisiHeader {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .stepper {
+    gap: 4px;
+    padding: 12px 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .stepDot {
+    width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+
+  .successActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btnReview,
+  .btnReset {
+    width: 100%;
+    justify-content: center;
   }
 
   .sHead {
